@@ -1,0 +1,35 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: center;
+    width: 300px;
+}
+
+.calculator .screen {
+    height: 60px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.calculator .grid-of-tools {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-template-rows: repeat(5. auto);
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
