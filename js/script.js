@@ -1,4 +1,3 @@
-
 const nums = document.querySelectorAll('.num');
 const operationDiv = document.querySelector('.operation');
 const resultDiv = document.querySelector('.result');
@@ -10,8 +9,11 @@ const divisionBtn = document.querySelector('.division');
 const modulusBtn = document.querySelector('.modulus');
 const powerBtn = document.querySelector('.power');
 const equalBtn = document.querySelector('.equal');
+const signBtn = document.querySelector('.sign');
 const allOperators = document.querySelectorAll('.operator');
 const backspace = document.querySelector('.backspace');
+const clearBtn = document.querySelector('.clear');
+const history = document.querySelector('.history');
 
 let numClicked;
 let num1 = "";
@@ -22,19 +24,59 @@ let operatorFlage = true;
 let result;
 let operaterAcc = true;
 let deletedNum1 = true;
+let error = true;
+let signFlag = true;
+
+allBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        if (error === false){
+            operationDiv.textContent = "";
+            resultDiv.textContent = "";
+            num1Flag = true;
+            operatorFlage = true;
+            operaterAcc = true;
+            deletedNum1 = true;
+            operaterAcc = true;
+            num1 = "";
+            num2 = "";
+            operator = "";
+            error = true;
+        }
+    })
+})
 
 nums.forEach((num) => {
     num.addEventListener('click', () => {
+    if (operationDiv.textContent.slice(-1) !== 'S'){
         if (operatorFlage === true) {
             if (num1Flag === true) {
-                
-                    if (num.textContent === '.') {
-                        operationDiv.textContent += '.';
-                        num1 += ".";
+                    if (num.textContent === "±"){
+                        splittedDiv = operationDiv.textContent.split('');
+                        if (num1.charAt(0) !== "-" && operator === ""){
+                            let oldNum1 = num1;
+                            num1 = "-" + oldNum1; 
+                            splittedDiv.unshift("-");
+                            joined = splittedDiv.join('');
+                            operationDiv.textContent = joined;
+                        }
+                        else if (num1.includes('-') === true && operator === ""){
+                            let newNum1 = num1.slice(1);
+                            num1 = newNum1;
+                            splittedDiv.shift();
+                            joined = splittedDiv.join('');
+                            operationDiv.textContent = joined;
+                        }
                     }
+                    else if (num.textContent === '.') {
+                        if (num1.includes('.') === false){
+                            operationDiv.textContent += '.';
+                            num1 += ".";    
+                        }
+                        
+                    }
+                    
                     else {
                         numClicked = num.textContent;
-                        console.log(numClicked);
                         operationDiv.textContent += numClicked;
                         num1 += +numClicked;
                     }
@@ -42,9 +84,40 @@ nums.forEach((num) => {
                 
             }
             else if (num1Flag === false) {
-                if (num.textContent === '.') {
-                    operationDiv.textContent += '.';
-                    num2 += ".";
+                if (num.textContent === "±"){
+                    splittedDiv = operationDiv.textContent.split('');
+                    if (num2.charAt(0) !== "-"){
+                        let oldNum2 = num2;
+                        num2 = "-" + oldNum2;
+                        let signIndex = splittedDiv.findIndex((num) => {
+                            if (num === ' '){
+                            
+                                return true
+                            }  
+                        })
+                        splittedDiv.splice(signIndex + 3, 0, "-");
+                        operationDiv.textContent = splittedDiv.join('');
+                    }
+                    else if (num2.includes('-') === true){
+                        let newNum2 = num2.slice(1);
+                        num2 = newNum2;
+                        let signIndex = splittedDiv.findIndex((num) => {
+                            if (num === ' '){
+                            
+                                return true
+                            }
+                        })
+                        splittedDiv.splice(signIndex + 3, 1);
+                        operationDiv.textContent = splittedDiv.join('');
+
+                    }
+                }
+                else if (num.textContent === '.') {
+                    if (num2.includes('.') === false){
+                        operationDiv.textContent += '.';
+                        num2 += "."    
+                    }
+                    
                 }
                 else {
                     numClicked = +num.textContent;
@@ -55,9 +128,39 @@ nums.forEach((num) => {
             }
         }
         else if (operatorFlage === false) {
-            if (num.textContent === '.') {
-                operationDiv.textContent += '.';
-                num2 += ".";
+            if (num.textContent === "±"){
+                splittedDiv = operationDiv.textContent.split('');
+                if (num2.charAt(0) !== "-"){
+                    let oldNum2 = num2;
+                    num2 = "-" + oldNum2;
+                    let signIndex = splittedDiv.findIndex((num) => {
+                        if (num === ' '){
+
+                        
+                            return true
+                        }  
+                    })
+                    splittedDiv.splice(signIndex + 3, 0, "-");
+                    operationDiv.textContent = splittedDiv.join('');
+                }
+                else if (num2.includes('-') === true){
+                    let newNum2 = num2.slice(1);
+                    num2 = newNum2;
+                    let signIndex = splittedDiv.findIndex((num) => {
+                        if (num === ' '){
+                            return true
+                        }
+                    })
+                    splittedDiv.splice(signIndex + 3, 1);
+                    operationDiv.textContent = splittedDiv.join('');
+
+                }
+            }
+            else if (num.textContent === '.') {
+                if (num2.includes('.') === false){
+                    operationDiv.textContent += '.';
+                    num2 += "."    
+                }
             }
             else {
                 numClicked = +num.textContent;
@@ -67,6 +170,8 @@ nums.forEach((num) => {
 
         }
 
+    }
+        
     })
 })
 
@@ -100,17 +205,20 @@ allOperators.forEach((operator) => {
 
 
 equalBtn.addEventListener('click', () => {
-    if (operationDiv.textContent.charAt(0) !== "A"){
-        operaterAcc = false;
-        operatorFlage = false;
-        operation();
+    if (num2 !== ""){
+        if (operationDiv.textContent.charAt(0) !== "A"){
+                operaterAcc = false;
+                operatorFlage = false;
+                operation();
+            }
+            else {
+                num1 = result.toString();
+                operaterAcc = false;
+                operatorFlage = false;
+                operation();
+            }
     }
-    else {
-        num1 = result.toString();
-        operaterAcc = false;
-        operatorFlage = false;
-        operation();
-    }
+    
     
 })
 
@@ -129,11 +237,19 @@ function operationProcess (operationType, sign){
             operaterAcc = false;
             operatorFlage = false;
             operation();
-            operator = `${operationType}`;
-            num1 = result.toString();
-            num2 = "";
-            operationDiv.textContent = `ANS`;
-            operationDiv.textContent += ` ${sign} `;
+            if (error === false){
+                num1 = "";
+                operationDiv.textContent = 'Math ERROR, press any button to continue';
+                resultDiv.textContent = " ";
+            }
+            else {
+                operator = `${operationType}`;
+                num1 = result.toString();
+                num2 = "";
+                operationDiv.textContent = `ANS`;
+                operationDiv.textContent += ` ${sign} `;
+            }
+            
         }    
     }
 }
@@ -156,15 +272,9 @@ divisionBtn.addEventListener('click', () => {
     operationProcess('divide', '÷')
 })
 
-
-modulusBtn.addEventListener('click', () => {
-    operationProcess('remainder', '%')
-})
-
 powerBtn.addEventListener('click', () => {
     operationProcess('power', '^')
 })
-
 
 
 function checkForIntegerThenRound() {
@@ -172,7 +282,7 @@ function checkForIntegerThenRound() {
         return result;
     }
     else {
-        result = Math.round(result*10000)/10000;
+        result = Math.round(result*100000)/100000;
         return result; 
     }
 }
@@ -180,6 +290,7 @@ function checkForIntegerThenRound() {
 function add() {
     result = +num1 + +num2;
     return checkForIntegerThenRound();
+    
 }
 
 function subtract() {
@@ -193,18 +304,17 @@ function multiply() {
 }
 
 function divide() {
-    if (num2 == 0) {
-        operatorFlage = null;
-        result = 'Math ERROR';
-        return result;
-    }
     result = +num1 / +num2;
-    return checkForIntegerThenRound();
-}
-
-function modulus() {
-    result = +num1 % +num2;
-    return checkForIntegerThenRound();
+    if (num2 == 0) {
+        error = false;
+        num1 = "";
+        operationDiv.textContent = `Math ERROR, press any button to continue`;
+        resultDiv.textContent = " ";
+    }
+    else {
+        return checkForIntegerThenRound();
+    }
+    
 }
 
 function power() {
@@ -225,9 +335,6 @@ function operation() {
     }
     else if (operator === 'divide') {
         resultDiv.textContent = divide();
-    }
-    else if (operator === 'remainder') {
-        resultDiv.textContent = modulus();
     }
     else if (operator === 'power') {
         resultDiv.textContent = power();
@@ -285,7 +392,10 @@ backspace.addEventListener('click', () => {
         let newText = operationDiv.textContent.slice(0, operationDiv.textContent.length - 3);
         operationDiv.textContent = newText;
         if (operationDiv.textContent.charAt(0) !== "A"){
-            num1Flag = !num1Flag; 
+            if(operator !== ""){
+              num1Flag = !num1Flag; 
+            }
+            
         }
         else if (operationDiv.textContent.charAt(0) === "A"){
             num1Flag = false;
@@ -293,3 +403,18 @@ backspace.addEventListener('click', () => {
         operator = "";  
         }
 })
+
+clearBtn.addEventListener('click', () => {
+    operationDiv.textContent = "";
+    resultDiv.textContent = "";
+    num1Flag = true;
+    operatorFlage = true;
+    operaterAcc = true;
+    deletedNum1 = true;
+    operaterAcc = true;
+    num1 = "";
+    num2 = "";
+    operator = "";
+    error = true;
+})
+
