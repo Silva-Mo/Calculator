@@ -13,7 +13,8 @@ const signBtn = document.querySelector('.sign');
 const allOperators = document.querySelectorAll('.operator');
 const backspace = document.querySelector('.backspace');
 const clearBtn = document.querySelector('.clear');
-const history = document.querySelector('.history');
+const historyDiv = document.querySelector('.history');
+const historyBtn = document.querySelector('.history-btn');
 
 let numClicked;
 let num1 = "";
@@ -26,6 +27,7 @@ let operaterAcc = true;
 let deletedNum1 = true;
 let error = true;
 let signFlag = true;
+let historyFlag = true;
 
 allBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -289,17 +291,29 @@ function checkForIntegerThenRound() {
 
 function add() {
     result = +num1 + +num2;
+    let divOfPreviousOperation = document.createElement('div');
+    divOfPreviousOperation.classList.add('previous-result');
+    divOfPreviousOperation.textContent = `${num1}  +  ${num2} ${'\xa0'.repeat(1)} = ${'\xa0'.repeat(1)} ${checkForIntegerThenRound()}`;
+    historyDiv.prepend(divOfPreviousOperation);
     return checkForIntegerThenRound();
     
 }
 
 function subtract() {
     result = +num1 - +num2;
+    let divOfPreviousOperation = document.createElement('div');
+    divOfPreviousOperation.classList.add('previous-result');
+    divOfPreviousOperation.textContent = `${num1}  -  ${num2} ${'\xa0'.repeat(1)} = ${'\xa0'.repeat(1)} ${checkForIntegerThenRound()}`;
+    historyDiv.prepend(divOfPreviousOperation);
     return checkForIntegerThenRound();
 }
 
 function multiply() {
     result = +num1 * +num2;
+    let divOfPreviousOperation = document.createElement('div');
+    divOfPreviousOperation.classList.add('previous-result');
+    divOfPreviousOperation.textContent = `${num1}  x  ${num2} ${'\xa0'.repeat(1)} = ${'\xa0'.repeat(1)} ${checkForIntegerThenRound()}`;
+    historyDiv.prepend(divOfPreviousOperation);
     return checkForIntegerThenRound();
 }
 
@@ -312,6 +326,10 @@ function divide() {
         resultDiv.textContent = " ";
     }
     else {
+        let divOfPreviousOperation = document.createElement('div');
+        divOfPreviousOperation.classList.add('previous-result');
+        divOfPreviousOperation.textContent = `${num1}  ÷  ${num2} ${'\xa0'.repeat(1)} = ${'\xa0'.repeat(1)} ${checkForIntegerThenRound()}`;
+        historyDiv.prepend(divOfPreviousOperation);
         return checkForIntegerThenRound();
     }
     
@@ -319,6 +337,10 @@ function divide() {
 
 function power() {
     result = Math.pow(+num1, +num2);
+    let divOfPreviousOperation = document.createElement('div');
+    divOfPreviousOperation.classList.add('previous-result');
+    divOfPreviousOperation.textContent = `${num1}  ^  ${num2} ${'\xa0'.repeat(1)} = ${'\xa0'.repeat(1)} ${checkForIntegerThenRound()}`;
+    historyDiv.prepend(divOfPreviousOperation);
     return checkForIntegerThenRound();
 }
 
@@ -405,16 +427,34 @@ backspace.addEventListener('click', () => {
 })
 
 clearBtn.addEventListener('click', () => {
-    operationDiv.textContent = "";
-    resultDiv.textContent = "";
-    num1Flag = true;
-    operatorFlage = true;
-    operaterAcc = true;
-    deletedNum1 = true;
-    operaterAcc = true;
-    num1 = "";
-    num2 = "";
-    operator = "";
-    error = true;
+    if (confirm('Do you really want to clear ? the history will be cleard too !') === true){
+        operationDiv.textContent = "";
+        resultDiv.textContent = "";
+        num1Flag = true;
+        operatorFlage = true;
+        operaterAcc = true;
+        deletedNum1 = true;
+        operaterAcc = true;
+        num1 = "";
+        num2 = "";
+        operator = ""; 
+        let historyResults = document.querySelectorAll('.previous-result');
+        historyResults.forEach((result) => {
+            historyDiv.removeChild(result);
+        })
+        error = true;
+       
+    }
+})
+
+historyBtn.addEventListener('click', () => {
+    historyFlag = !historyFlag;
+    if (historyFlag === false){
+        historyDiv.setAttribute('style', 'display: flex');    
+    }
+    else{
+        historyDiv.removeAttribute('style');
+    }
+    
 })
 

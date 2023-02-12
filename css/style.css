@@ -33,3 +33,12 @@ body {
     align-items: center;
     justify-content: center;
 }
+.history {
+    display: none;
+    height: 250px;
+    width: 200px;
+    border: 2px solid black;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+    overflow-y: auto;
+}
