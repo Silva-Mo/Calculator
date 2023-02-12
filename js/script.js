@@ -28,6 +28,7 @@ let deletedNum1 = true;
 let error = true;
 let signFlag = true;
 let historyFlag = true;
+let clickedSign = true;
 
 allBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -52,7 +53,7 @@ nums.forEach((num) => {
     if (operationDiv.textContent.slice(-1) !== 'S'){
         if (operatorFlage === true) {
             if (num1Flag === true) {
-                    if (num.textContent === "±"){
+                    if (num.textContent === "±" || clickedSign === false){
                         splittedDiv = operationDiv.textContent.split('');
                         if (num1.charAt(0) !== "-" && operator === ""){
                             let oldNum1 = num1;
@@ -68,6 +69,9 @@ nums.forEach((num) => {
                             joined = splittedDiv.join('');
                             operationDiv.textContent = joined;
                         }
+                        if (clickedSign === false) {
+                            clickedSign === true;
+                        } 
                     }
                     else if (num.textContent === '.') {
                         if (num1.includes('.') === false){
@@ -458,3 +462,47 @@ historyBtn.addEventListener('click', () => {
     
 })
 
+window.addEventListener('keydown', (e) => {
+    console.log(e.key);
+    if (e.key === 'Backspace'){
+        backspace.click();
+    }
+    else if (e.key === 'CapsLock'){
+        nums.forEach((num) => {
+            if (num.textContent === '±'){
+                num.click();
+            }
+            
+        })
+    }
+    else if (Number.isInteger(+e.key) === true && e.key !== " " || e.key === "."){
+        nums.forEach((num) => {
+            if (e.key.toString() === num.textContent){
+                num.click();
+            }
+        })
+    } 
+
+    else if (e.key === "+"){
+        addBtn.click();
+    }
+    else if (e.key === "-"){
+        subtractBtn.click();
+    }
+    else if (e.key === "*"){
+        multiplyBtn.click();
+    }
+    else if (e.key === "/"){
+        divisionBtn.click();
+    }
+    else if (e.key === "^"){
+        powerBtn.click();
+    }
+    else if (e.key === 'Enter'){
+        equalBtn.click();
+    }
+
+    else if (e.key === "Escape"){
+        clearBtn.click();
+    }
+})
