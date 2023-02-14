@@ -183,7 +183,8 @@ nums.forEach((num) => {
 
 allOperators.forEach((operator) => {
     operator.addEventListener('click', () => {
-        if (num1 !== "" && num1.charAt(0) === "-" && num1.charAt(1) !=="" || num1 !== "" && num1.charAt(0) !== "-") {
+        if ((num1 !== "" && num1.charAt(0) === "-" && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== "-" ) && 
+        (num1 !== "" && num1.charAt(0) === "." && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== ".")) {
             if (operationDiv.textContent.slice(-1).trimEnd() === "") {
                 let arrayOperationDiv = operationDiv.textContent.split("");
                 arrayOperationDiv.splice(-2, 2);
@@ -211,7 +212,8 @@ allOperators.forEach((operator) => {
 
 
 equalBtn.addEventListener('click', () => {
-    if (num2 !== "" && num2.charAt(0) === "-" && num2.charAt(1) !=="" || num2 !== "" && num2.charAt(0) !== "-"){
+    if ((num2 !== "" && num2.charAt(0) === "-" && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== "-" ) && 
+    (num2 !== "" && num2.charAt(0) === "." && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== ".")){
         if (operationDiv.textContent.charAt(0) !== "A"){
                 operaterAcc = false;
                 operatorFlage = false;
@@ -229,7 +231,8 @@ equalBtn.addEventListener('click', () => {
 })
 
 function operationProcess (operationType, sign){
-    if(num1 !== "" && num1.charAt(0) === "-" && num1.charAt(1) !=="" || num1 !== "" && num1.charAt(0) !== "-"){
+    if((num1 !== "" && num1.charAt(0) === "-" && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== "-" ) && 
+    (num1 !== "" && num1.charAt(0) === "." && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== ".")){
         if (num2 === "") {
             operationDiv.textContent += ` ${sign} `;
             operator = `${operationType}`;
@@ -240,8 +243,8 @@ function operationProcess (operationType, sign){
             operator = `${operationType}`;
         }
         else {
-            if(num2 !== "" && num2.charAt(0) === "-" && num2.charAt(1) !=="" || num2 !== "" && num2.charAt(0) !== "-"){
-                operaterAcc = false;
+            if((num2 !== "" && num2.charAt(0) === "-" && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== "-" ) && 
+            (num2 !== "" && num2.charAt(0) === "." && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== ".")){
                 operatorFlage = false;
                 operation();    
             }
