@@ -183,7 +183,7 @@ nums.forEach((num) => {
 
 allOperators.forEach((operator) => {
     operator.addEventListener('click', () => {
-        if (num1 !== "") {
+        if (num1 !== "" && num1.charAt(0) === "-" && num1.charAt(1) !=="" || num1 !== "" && num1.charAt(0) !== "-") {
             if (operationDiv.textContent.slice(-1).trimEnd() === "") {
                 let arrayOperationDiv = operationDiv.textContent.split("");
                 arrayOperationDiv.splice(-2, 2);
@@ -211,7 +211,7 @@ allOperators.forEach((operator) => {
 
 
 equalBtn.addEventListener('click', () => {
-    if (num2 !== ""){
+    if (num2 !== "" && num2.charAt(0) === "-" && num2.charAt(1) !=="" || num2 !== "" && num2.charAt(0) !== "-"){
         if (operationDiv.textContent.charAt(0) !== "A"){
                 operaterAcc = false;
                 operatorFlage = false;
@@ -229,7 +229,7 @@ equalBtn.addEventListener('click', () => {
 })
 
 function operationProcess (operationType, sign){
-    if(num1 !== ""){
+    if(num1 !== "" && num1.charAt(0) === "-" && num1.charAt(1) !=="" || num1 !== "" && num1.charAt(0) !== "-"){
         if (num2 === "") {
             operationDiv.textContent += ` ${sign} `;
             operator = `${operationType}`;
@@ -240,9 +240,11 @@ function operationProcess (operationType, sign){
             operator = `${operationType}`;
         }
         else {
-            operaterAcc = false;
-            operatorFlage = false;
-            operation();
+            if(num2 !== "" && num2.charAt(0) === "-" && num2.charAt(1) !=="" || num2 !== "" && num2.charAt(0) !== "-"){
+                operaterAcc = false;
+                operatorFlage = false;
+                operation();    
+            }
             if (error === false){
                 num1 = "";
                 operationDiv.textContent = 'Math ERROR, press any button to continue';

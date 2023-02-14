@@ -1,37 +1,55 @@
+@font-face {
+    font-family: 'Khula';
+    src: url(../fonts/Khula-Light.ttf);
+}
+
+
 body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: linear-gradient(to bottom right,#1d4249,#3FD3D3);
 }
 
 .calculator {
     display: flex;
     flex-direction: column;
     align-content: stretch;
-    justify-content: center;
-    width: 300px;
+    justify-content: space-between;
+    width: 330px;
+    border: 2px solid white;
+    height: 450px;
 }
 
 .calculator .screen {
-    height: 60px;
+    height: 50%;
     border: 2px solid black;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
+    gap: 1rem;
+    background-color: #000000;
+    padding: 4px;
+    overflow-y: auto;
+    overflow-x: auto;
 }
 
 .calculator .grid-of-tools {
     display: grid;
     grid-template-columns: repeat(4, auto);
     grid-template-rows: repeat(5. auto);
+    height: 100%;
+    background-color: #131313;
 }
 
 .btn {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Khula', sans-serif;
+    font-size: 30px;
 }
 .history {
     display: none;
@@ -40,5 +58,50 @@ body {
     border: 2px solid black;
     flex-direction: column-reverse;
     overflow-y: auto;
-    overflow-y: auto;
+}
+
+.tool,
+.operator, 
+.equal{
+    color: #3FD3D3;
+    font-weight: 600;
+}
+
+.backspace {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.num {
+    color: white;
+    font-weight: 600;
+}
+
+.sign {
+    color: #3FD3D3;
+    font-weight: 400;
+
+}
+
+.history-btn {
+    align-self: flex-start;
+}
+.operation {
+    align-self: stretch;
+    color: white;
+    font-family: 'Khula', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    height: 30px;
+    margin-bottom: 17px;
+}
+
+.result {
+    align-self: flex-end;
+    color: #3FD3D3;
+    font-family: 'Khula', sans-serif;
+    font-size: 43px;
+    height: 40px;
+    font-weight: 600;
+    margin-bottom: -10px;
 }
