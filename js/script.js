@@ -1,3 +1,4 @@
+const calculator = document.querySelector('.calculator');
 const nums = document.querySelectorAll('.num');
 const operationDiv = document.querySelector('.operation');
 const resultDiv = document.querySelector('.result');
@@ -15,6 +16,10 @@ const backspace = document.querySelector('.backspace');
 const clearBtn = document.querySelector('.clear');
 const historyDiv = document.querySelector('.history');
 const historyBtn = document.querySelector('.history-btn');
+const screenDiv = document.querySelector('.screen');
+const gridOfTools = document.querySelector('.grid-of-tools');
+const h2History = document.querySelector('h2');
+const lightModeBtn = document.querySelector('.lightMode-btn');
 
 let numClicked;
 let num1 = "";
@@ -29,6 +34,7 @@ let error = true;
 let signFlag = true;
 let historyFlag = true;
 let clickedSign = true;
+let lightMode = false;
 
 allBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -50,6 +56,10 @@ allBtns.forEach((btn) => {
 
 nums.forEach((num) => {
     num.addEventListener('click', () => {
+if(operationDiv.textContent.length >= 35){
+    alert('You have exceeded the limit of numbers !')
+    return;
+}
     if (operationDiv.textContent.slice(-1) !== 'S'){
         if (operatorFlage === true) {
             if (num1Flag === true) {
@@ -183,6 +193,9 @@ nums.forEach((num) => {
 
 allOperators.forEach((operator) => {
     operator.addEventListener('click', () => {
+        if(operationDiv.textContent.length >= 35){
+            return;
+        }
         if ((num1 !== "" && num1.charAt(0) === "-" && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== "-" ) && 
         (num1 !== "" && num1.charAt(0) === "." && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== ".")) {
             if (operationDiv.textContent.slice(-1).trimEnd() === "") {
@@ -198,13 +211,6 @@ allOperators.forEach((operator) => {
             if (operatorFlage === true && deletedNum1 === true && operationDiv.textContent.charAt(0) !== "A") {
                 num1Flag = !num1Flag;
             }
-            else if (operatorFlage === false) {
-                if (operaterAcc === true) {
-                    num1 = result.toString();
-                    num2 = "";
-                    operationDiv.textContent = `${num1}`;
-                }
-            }    
         }
         
     })
@@ -231,7 +237,11 @@ equalBtn.addEventListener('click', () => {
 })
 
 function operationProcess (operationType, sign){
-    if((num1 !== "" && num1.charAt(0) === "-" && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== "-" ) && 
+if(operationDiv.textContent.length >= 35){
+    alert('You have exceeded the limit of numbers !')
+    return;
+}
+    if((num1 !== "" && num1.charAt(0) === "-" && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== "-")&& 
     (num1 !== "" && num1.charAt(0) === "." && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== ".")){
         if (num2 === "") {
             operationDiv.textContent += ` ${sign} `;
@@ -250,7 +260,7 @@ function operationProcess (operationType, sign){
             }
             if (error === false){
                 num1 = "";
-                operationDiv.textContent = 'Math ERROR, press any button to continue';
+                operationDiv.textContent = 'Math ERROR, press any button to continue :)';
                 resultDiv.textContent = " ";
             }
             else {
@@ -331,8 +341,8 @@ function divide() {
     if (num2 == 0) {
         error = false;
         num1 = "";
-        operationDiv.textContent = `Math ERROR, press any button to continue`;
-        resultDiv.textContent = " ";
+        operationDiv.textContent = `Math ERROR, press any button to continue :)`;
+        resultDiv.textContent = "";
     }
     else {
         let divOfPreviousOperation = document.createElement('div');
@@ -345,7 +355,7 @@ function divide() {
 }
 
 function power() {
-    result = Math.pow(+num1, +num2);
+    result = (+num1) ** (+num2);
     let divOfPreviousOperation = document.createElement('div');
     divOfPreviousOperation.classList.add('previous-result');
     divOfPreviousOperation.textContent = `${num1}  ^  ${num2} ${'\xa0'.repeat(1)} = ${'\xa0'.repeat(1)} ${checkForIntegerThenRound()}`;
@@ -436,7 +446,7 @@ backspace.addEventListener('click', () => {
 })
 
 clearBtn.addEventListener('click', () => {
-    if (confirm('Do you really want to clear ? the history will be cleard too !') === true){
+    if (confirm('Do you really want to clear ? history will be cleard too !') === true){
         operationDiv.textContent = "";
         resultDiv.textContent = "";
         num1Flag = true;
@@ -459,10 +469,18 @@ clearBtn.addEventListener('click', () => {
 historyBtn.addEventListener('click', () => {
     historyFlag = !historyFlag;
     if (historyFlag === false){
-        historyDiv.setAttribute('style', 'display: flex');    
+        operationDiv.setAttribute('style', 'display: none;');
+        resultDiv.setAttribute('style', 'display: none;');
+        historyDiv.setAttribute('style', 'display: flex'); 
+        h2History.setAttribute('style', 'display: block;');   
+        historyDiv.classList.add('slide-in');
     }
     else{
+        operationDiv.removeAttribute('style');
+        resultDiv.removeAttribute('style');
         historyDiv.removeAttribute('style');
+        h2History.removeAttribute('style');
+        historyDiv.classList.remove('slide-in');
     }
     
 })
@@ -509,5 +527,37 @@ window.addEventListener('keydown', (e) => {
 
     else if (e.key === "Escape"){
         clearBtn.click();
+    }
+})
+
+lightModeBtn.addEventListener('click', () => {
+    lightMode = !lightMode;
+    if (lightMode){
+        gridOfTools.setAttribute('style', 'background-color: #f3fdfc');
+        calculator.setAttribute('style', 'border: 2px solid black;');
+        screenDiv.setAttribute('style', 'background-color: white;');
+        nums.forEach((num) => {
+            if(num.textContent === '±'){
+                return;
+            }
+            num.setAttribute('style', 'color: black;');
+        })
+        operationDiv.classList.add('operation-light');
+        historyDiv.classList.add('history-light');
+        h2History.classList.add('light');
+    }
+    else if (!lightMode){
+        gridOfTools.removeAttribute('style');
+        calculator.removeAttribute('style');
+        screenDiv.removeAttribute('style');
+        nums.forEach((num) => {
+            if(num.textContent === '±'){
+                return;
+            }
+            num.removeAttribute('style');
+        })
+        operationDiv.classList.remove('operation-light');
+        historyDiv.classList.remove('history-light');
+        h2History.classList.remove('light');
     }
 })

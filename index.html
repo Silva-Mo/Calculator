@@ -9,15 +9,17 @@
     <script src="js/script.js" defer></script>
     <title>Calculator</title>
 </head>
-<body>
-    <div class="history">
-
-    </div>
+<body ondragstart="return false;" ondrop="return false;">
     <div class="calculator">
         <div class="screen">
+            <h2>History</h2>
+            <div class="history"></div>
             <div class="operation"></div>
             <div class="result"></div>
-            <button class="history-btn">↻</button>
+            <div class="more-tools">
+                <button tabindex="-1" onkeypress="return event.keyCode != 13;" class="history-btn">↻</button>
+                <button tabindex="-1" onkeypress="return event.keyCode != 13;" class="lightMode-btn"><img src="imgs/lightMode.png"></button>
+            </div>
         </div>
         <div class="grid-of-tools">
             <div class="clear tool btn">C</div>
@@ -40,7 +42,10 @@
             <div class="decimal num btn">.</div>
             <div class="power operator btn">xⁿ</div>
             <div class="equal btn">=</div>
-        </div>
+        </div>   
+    </div>
+    <div class="footer">
+        <a href="https://github.com/Silva-Mo/Calculator">Copyright © Webpage by: Silva-Mo</a>  
     </div>
 </body>
 </html>

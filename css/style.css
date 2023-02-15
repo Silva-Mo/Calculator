@@ -3,13 +3,18 @@
     src: url(../fonts/Khula-Light.ttf);
 }
 
+@font-face {
+    font-family: 'Ubuntu';
+    src: url(../fonts/Ubuntu-Regular.ttf);
+}
 
 body {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(to bottom right,#1d4249,#3FD3D3);
+    background-image: linear-gradient(to bottom right,#295a64,#248b8b);
 }
 
 .calculator {
@@ -17,53 +22,55 @@ body {
     flex-direction: column;
     align-content: stretch;
     justify-content: space-between;
-    width: 330px;
+    width: 325px;
     border: 2px solid white;
-    height: 450px;
+    height: 485px;
 }
 
 .calculator .screen {
-    height: 50%;
-    border: 2px solid black;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: 7px;
     background-color: #000000;
     padding: 4px;
-    overflow-y: auto;
-    overflow-x: auto;
+    height: 35.5%;
 }
 
 .calculator .grid-of-tools {
     display: grid;
+    justify-content: space-around;
     grid-template-columns: repeat(4, auto);
     grid-template-rows: repeat(5. auto);
-    height: 100%;
+    height: 305px;
     background-color: #131313;
 }
 
 .btn {
     display: flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 100px;
+    height: 60px;
+    width: 60px;
+    display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Khula', sans-serif;
     font-size: 30px;
+    transition: 0.5s;
 }
-.history {
-    display: none;
-    height: 250px;
-    width: 200px;
-    border: 2px solid black;
-    flex-direction: column-reverse;
-    overflow-y: auto;
+
+.btn:hover {
+   background-color: #35c9c97e;
+   color: #000000;
 }
 
 .tool,
 .operator, 
 .equal{
-    color: #3FD3D3;
+    color: #30c2c2;
     font-weight: 600;
 }
 
@@ -83,25 +90,142 @@ body {
 
 }
 
-.history-btn {
-    align-self: flex-start;
+.clear {
+    font-size: 26px;
 }
+
+
 .operation {
+    padding-top: 10px;
     align-self: stretch;
     color: white;
     font-family: 'Khula', sans-serif;
-    font-size: 40px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    display: block;
+    line-height: 1em; 
+    max-height: 2em;
+    font-size: 30px;
     font-weight: 600;
-    height: 30px;
-    margin-bottom: 17px;
+    margin-bottom: -16px;
 }
 
 .result {
-    align-self: flex-end;
+    margin-top: 2rem;
+    padding-top: 8px;
+    align-self: stretch;
+    text-align: end;
     color: #3FD3D3;
     font-family: 'Khula', sans-serif;
-    font-size: 43px;
-    height: 40px;
+    font-size: 33px;
+    height: 30px;
+    line-height: 1em;
+    max-height: 2em;
     font-weight: 600;
-    margin-bottom: -10px;
+    padding-bottom: 1rem;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    display: block;
+}
+
+.history {
+    border-radius: 5px;
+    align-self: center;
+    display: none;
+    height: 130px;
+    width: 320px;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+    background: #2d5b6463;
+    
+}
+
+.previous-result {
+    font-family: 'Khula', sans-serif;
+    border-top: 1px solid #2ab8b8;
+    color: white;
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 5px 0 5px;
+}
+
+.previous-result + .previous-result {
+    border-bottom: 0;
+    margin: 0 5px 0 5px;
+}
+
+.screen h2 {
+    height: 25px;
+    display: none;
+    color: white;
+    align-self: center;
+    padding: 0;
+    margin: 0;
+    font-family: 'Khula', sans-serif;
+}
+.more-tools{
+    align-self: flex-start;
+    display: flex;
+    gap:8px;
+}
+.history-btn {
+    background-color: #131313;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 50px;
+    padding: 0 3px 0 3px;
+}
+
+.history-btn:hover {
+    background-color: #3fd3d37e;
+    color: #000000;
+}
+
+.lightMode-btn{
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: none;
+    padding: 0 3px 0 3px;
+}
+.lightMode-btn img{
+    height: 16px;
+    width: auto;
+}
+
+.lightMode-btn:hover {
+    background-color: #3fd3d37e;
+    color: #000000;
+}
+
+.history-light{
+    background-color: #264d55;
+}
+
+.operation-light {
+    color:#000000;
+}
+
+.screen .light{
+    color: #000000;
+}
+
+.footer{
+    margin-top: 30px;
+}
+
+.footer a {
+    text-decoration: none;
+    font-family: 'Ubuntu' ,sans-serif;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px black, 0 0 25px rgb(0, 0, 0), 0 0 5px rgb(0, 0, 0);
+}
+
+.footer a:hover {
+    color: #d1d1d1
 }
