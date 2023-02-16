@@ -64,7 +64,7 @@ if(operationDiv.textContent.length >= 35){
     alert('You have exceeded the limit of numbers !')
     return;
 }
-    if (operationDiv.textContent.slice(-1) !== 'S'){
+    if (operationDiv.textContent.slice(-1) !== 's'){
         if (operatorFlage === true) {
             if (num1Flag === true) {
                     if (num.textContent === "±" || clickedSign === false){
