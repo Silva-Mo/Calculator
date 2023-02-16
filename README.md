@@ -5,7 +5,7 @@ This time I wanted to make this project special and different from the other pro
 
 Alhamdulillah
 
-# What was needed to complete that project:
+# What was needed to complete it:
 1. Problem-Solving skills
 2. Patience 
 3. Good CSS Flexbox and Grid manipulation skills
@@ -14,4 +14,3 @@ Alhamdulillah
 # Challenges that I've overcame: 
 1. Making the calculator smart and responsive by using a lot of conditionals to prevent errors 
 2. Organizing the calculator screen div to avoid overflow issues
-
