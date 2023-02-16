@@ -450,7 +450,7 @@ backspace.addEventListener('click', () => {
 })
 
 clearBtn.addEventListener('click', () => {
-    if (confirm('Do you really want to clear ? history will be cleard too !') === true){
+    if (confirm('Do you really want to clear ? history will be cleared too !') === true){
         operationDiv.textContent = "";
         resultDiv.textContent = "";
         num1Flag = true;
