@@ -20,6 +20,9 @@ const screenDiv = document.querySelector('.screen');
 const gridOfTools = document.querySelector('.grid-of-tools');
 const h2History = document.querySelector('h2');
 const lightModeBtn = document.querySelector('.lightMode-btn');
+const supportBtn = document.querySelector('.support-btn');
+const supportDiv = document.querySelector('.support');
+const toolBtns = document.querySelectorAll('button');
 
 let numClicked;
 let num1 = "";
@@ -35,6 +38,7 @@ let signFlag = true;
 let historyFlag = true;
 let clickedSign = true;
 let lightMode = false;
+let showSupport = false;
 
 allBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -108,7 +112,7 @@ if(operationDiv.textContent.length >= 35){
                         let signIndex = splittedDiv.findIndex((num) => {
                             if (num === ' '){
                             
-                                return true
+                                return true;
                             }  
                         })
                         splittedDiv.splice(signIndex + 3, 0, "-");
@@ -120,7 +124,7 @@ if(operationDiv.textContent.length >= 35){
                         let signIndex = splittedDiv.findIndex((num) => {
                             if (num === ' '){
                             
-                                return true
+                                return true;
                             }
                         })
                         splittedDiv.splice(signIndex + 3, 1);
@@ -131,7 +135,7 @@ if(operationDiv.textContent.length >= 35){
                 else if (num.textContent === '.') {
                     if (num2.includes('.') === false){
                         operationDiv.textContent += '.';
-                        num2 += "."    
+                        num2 += "." ;   
                     }
                     
                 }
@@ -153,7 +157,7 @@ if(operationDiv.textContent.length >= 35){
                         if (num === ' '){
 
                         
-                            return true
+                            return true;
                         }  
                     })
                     splittedDiv.splice(signIndex + 3, 0, "-");
@@ -164,7 +168,7 @@ if(operationDiv.textContent.length >= 35){
                     num2 = newNum2;
                     let signIndex = splittedDiv.findIndex((num) => {
                         if (num === ' '){
-                            return true
+                            return true;
                         }
                     })
                     splittedDiv.splice(signIndex + 3, 1);
@@ -175,7 +179,7 @@ if(operationDiv.textContent.length >= 35){
             else if (num.textContent === '.') {
                 if (num2.includes('.') === false){
                     operationDiv.textContent += '.';
-                    num2 += "."    
+                    num2 += ".";    
                 }
             }
             else {
@@ -238,7 +242,7 @@ equalBtn.addEventListener('click', () => {
 
 function operationProcess (operationType, sign){
 if(operationDiv.textContent.length >= 35){
-    alert('You have exceeded the limit of numbers !')
+    alert('You have exceeded the limit of numbers !');
     return;
 }
     if((num1 !== "" && num1.charAt(0) === "-" && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== "-")&& 
@@ -267,7 +271,7 @@ if(operationDiv.textContent.length >= 35){
                 operator = `${operationType}`;
                 num1 = result.toString();
                 num2 = "";
-                operationDiv.textContent = `ANS`;
+                operationDiv.textContent = `Ans`;
                 operationDiv.textContent += ` ${sign} `;
             }
             
@@ -277,24 +281,24 @@ if(operationDiv.textContent.length >= 35){
 
 
 addBtn.addEventListener('click', () => {
-    operationProcess('add', '+')
+    operationProcess('add', '+');
 })
 
 subtractBtn.addEventListener('click', () => {
-    operationProcess('subtract', '-')
+    operationProcess('subtract', '-');
 })
 
 
 multiplyBtn.addEventListener('click', () => {
-    operationProcess('multiply', 'x')
+    operationProcess('multiply', 'x');
 })
 
 divisionBtn.addEventListener('click', () => {
-    operationProcess('divide', '÷')
+    operationProcess('divide', '÷');
 })
 
 powerBtn.addEventListener('click', () => {
-    operationProcess('power', '^')
+    operationProcess('power', '^');
 })
 
 
@@ -383,7 +387,7 @@ function operation() {
 } 
 
 backspace.addEventListener('click', () => {
-    if (operationDiv.textContent.slice(-1).trimEnd() === "S"){
+    if (operationDiv.textContent.slice(-1).trimEnd() === "s"){
         operationDiv.textContent = "";
         resultDiv.textContent = "";
         num1Flag = true;
@@ -486,7 +490,6 @@ historyBtn.addEventListener('click', () => {
 })
 
 window.addEventListener('keydown', (e) => {
-    console.log(e.key);
     if (e.key === 'Backspace'){
         backspace.click();
     }
@@ -559,5 +562,17 @@ lightModeBtn.addEventListener('click', () => {
         operationDiv.classList.remove('operation-light');
         historyDiv.classList.remove('history-light');
         h2History.classList.remove('light');
+    }
+})
+
+supportBtn.addEventListener('click', () => {
+    showSupport = !showSupport;
+    if (showSupport){
+        supportDiv.setAttribute('style', `display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(5. auto);`);
+    }
+    else {
+        supportDiv.removeAttribute('style');
     }
 })
