@@ -77,6 +77,11 @@ if (num.textContent !== '±' && resultDiv.textContent !== ""){
     num2 = "";
     operator = "";
 }
+
+if (num.textContent === "±"){
+    resultDiv.textContent = "";
+}
+
     if (operationDiv.textContent.slice(-1) !== 's'){
         if (operatorFlage === true) {
             if (num1Flag === true) {
