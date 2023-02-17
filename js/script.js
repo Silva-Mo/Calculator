@@ -64,6 +64,19 @@ if(operationDiv.textContent.length >= 35){
     alert('You have exceeded the limit of numbers !')
     return;
 }
+
+if (num.textContent !== '±' && resultDiv.textContent !== ""){
+    operationDiv.textContent = "";
+    resultDiv.textContent = "";
+    num1Flag = true;
+    operatorFlage = true;
+    operaterAcc = true;
+    deletedNum1 = true;
+    operaterAcc = true;
+    num1 = "";
+    num2 = "";
+    operator = "";
+}
     if (operationDiv.textContent.slice(-1) !== 's'){
         if (operatorFlage === true) {
             if (num1Flag === true) {
@@ -273,6 +286,7 @@ if(operationDiv.textContent.length >= 35){
                 num2 = "";
                 operationDiv.textContent = `Ans`;
                 operationDiv.textContent += ` ${sign} `;
+                resultDiv.textContent = "";
             }
             
         }    
@@ -387,6 +401,7 @@ function operation() {
 } 
 
 backspace.addEventListener('click', () => {
+    resultDiv.textContent = "";
     if (operationDiv.textContent.slice(-1).trimEnd() === "s"){
         operationDiv.textContent = "";
         resultDiv.textContent = "";
