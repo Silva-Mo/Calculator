@@ -39,6 +39,7 @@ let historyFlag = true;
 let clickedSign = true;
 let lightMode = false;
 let showSupport = false;
+let operated = false;
 
 allBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -65,7 +66,7 @@ if(operationDiv.textContent.length >= 35){
     return;
 }
 
-if (num.textContent !== '±' && resultDiv.textContent !== ""){
+if (num.textContent !== '±' && operated === true){
     operationDiv.textContent = "";
     resultDiv.textContent = "";
     num1Flag = true;
@@ -73,12 +74,13 @@ if (num.textContent !== '±' && resultDiv.textContent !== ""){
     operaterAcc = true;
     deletedNum1 = true;
     operaterAcc = true;
+    operated = false;
     num1 = "";
     num2 = "";
     operator = "";
 }
 
-if (num.textContent === "±"){
+if (num.textContent === "±" && operationDiv.textContent.charAt(0) !== "A"){
     resultDiv.textContent = "";
 }
 
@@ -278,7 +280,8 @@ if(operationDiv.textContent.length >= 35){
             if((num2 !== "" && num2.charAt(0) === "-" && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== "-" ) && 
             (num2 !== "" && num2.charAt(0) === "." && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== ".")){
                 operatorFlage = false;
-                operation();    
+                operation();   
+                operated = false; 
             }
             if (error === false){
                 num1 = "";
@@ -291,7 +294,6 @@ if(operationDiv.textContent.length >= 35){
                 num2 = "";
                 operationDiv.textContent = `Ans`;
                 operationDiv.textContent += ` ${sign} `;
-                resultDiv.textContent = "";
             }
             
         }    
@@ -388,6 +390,7 @@ function power() {
 
 
 function operation() {
+    operated = true;
     if (operator === 'add') {
         resultDiv.textContent = add();
     }
@@ -406,7 +409,10 @@ function operation() {
 } 
 
 backspace.addEventListener('click', () => {
-    resultDiv.textContent = "";
+    operated = false;
+    if(operationDiv.textContent.charAt(0) !== "A"){
+        resultDiv.textContent = "";    
+    }
     if (operationDiv.textContent.slice(-1).trimEnd() === "s"){
         operationDiv.textContent = "";
         resultDiv.textContent = "";
