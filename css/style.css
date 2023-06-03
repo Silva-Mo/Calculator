@@ -17,6 +17,13 @@ body {
     background-image: linear-gradient(to bottom right,#295a64,#248b8b);
 }
 
+.btn, .history-btn, .lightMode-btn{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .calculator {
     display: flex;
     flex-direction: column;
