@@ -244,14 +244,15 @@ allOperators.forEach((operator) => {
 equalBtn.addEventListener('click', () => {
     if ((num2 !== "" && num2.charAt(0) === "-" && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== "-" ) && 
        (num2 !== "" && num2.charAt(0) === "." && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== ".")){
-        if (operationDiv.textContent.charAt(0) !== "A"){
+        if (num2 === "-"){
+            return;
+        }
+        else if (operationDiv.textContent.charAt(0) !== "A"){
             operaterAcc = false;
             operatorFlage = false;
             operation();
         }
-        else if (num2 === "-"){
-            return;
-        }
+        
         else {
             num1 = result.toString();
             operaterAcc = false;
@@ -289,15 +290,19 @@ function operationProcess (operationType, sign){
                 operationDiv.textContent = 'Math ERROR, press any button to continue :)';
                 resultDiv.textContent = " ";
             }
-            else if (num2 === "-"){
-                return;
-            }
             else {
-                operator = `${operationType}`;
-                num1 = result.toString();
-                num2 = "";
-                operationDiv.textContent = `Ans`;
-                operationDiv.textContent += ` ${sign} `;
+                if (num2 !== "-"){
+                    operator = `${operationType}`;
+                    num1 = result.toString();
+                    num2 = "";
+                    operationDiv.textContent = `Ans`;
+                    operationDiv.textContent += ` ${sign} `;  
+                }  
+                else{
+                    operatorFlage = false;
+                    return
+                }
+                
             }
         }    
     }
