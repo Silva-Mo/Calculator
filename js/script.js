@@ -61,69 +61,113 @@ allBtns.forEach((btn) => {
 
 nums.forEach((num) => {
     num.addEventListener('click', () => {
-if(operationDiv.textContent.length >= 35){
-    alert('You have exceeded the limit of numbers !')
-    return;
-}
+        if(operationDiv.textContent.length >= 35){
+            alert('You have exceeded the limit of numbers !')
+            return;
+        }
 
-if (num.textContent !== '±' && operated === true){
-    operationDiv.textContent = "";
-    resultDiv.textContent = "";
-    num1Flag = true;
-    operatorFlage = true;
-    operaterAcc = true;
-    deletedNum1 = true;
-    operaterAcc = true;
-    operated = false;
-    num1 = "";
-    num2 = "";
-    operator = "";
-}
+        if (num.textContent !== '±' && operated === true){
+            operationDiv.textContent = "";
+            resultDiv.textContent = "";
+            num1Flag = true;
+            operatorFlage = true;
+            operaterAcc = true;
+            deletedNum1 = true;
+            operaterAcc = true;
+            operated = false;
+            num1 = "";
+            num2 = "";
+            operator = "";
+        }
 
-if (num.textContent === "±" && operationDiv.textContent.charAt(0) !== "A"){
-    resultDiv.textContent = "";
-}
+        if (num.textContent === "±" && operationDiv.textContent.charAt(0) !== "A"){
+            resultDiv.textContent = "";
+        }
 
-    if (operationDiv.textContent.slice(-1) !== 's'){
-        if (operatorFlage === true) {
-            if (num1Flag === true) {
-                    if (num.textContent === "±" || clickedSign === false){
+        if (operationDiv.textContent.slice(-1) !== 's'){
+            if (operatorFlage === true) {
+                if (num1Flag === true) {
+                        if (num.textContent === "±" || clickedSign === false){
+                            splittedDiv = operationDiv.textContent.split('');
+                            if (num1.charAt(0) !== "-" && operator === ""){
+                                let oldNum1 = num1;
+                                num1 = "-" + oldNum1; 
+                                splittedDiv.unshift("-");
+                                joined = splittedDiv.join('');
+                                operationDiv.textContent = joined;
+                            }
+                            else if (num1.includes('-') === true && operator === ""){
+                                let newNum1 = num1.slice(1);
+                                num1 = newNum1;
+                                splittedDiv.shift();
+                                joined = splittedDiv.join('');
+                                operationDiv.textContent = joined;
+                            }
+                            if (clickedSign === false) {
+                                clickedSign === true;
+                            } 
+                        }
+                        else if (num.textContent === '.') {
+                            if (num1.includes('.') === false){
+                                operationDiv.textContent += '.';
+                                num1 += ".";    
+                            }
+                            
+                        }
+                        
+                        else {
+                            numClicked = num.textContent;
+                            operationDiv.textContent += numClicked;
+                            num1 += +numClicked;
+                        }
+
+                    
+                }
+                else if (num1Flag === false) {
+                    if (num.textContent === "±"){
                         splittedDiv = operationDiv.textContent.split('');
-                        if (num1.charAt(0) !== "-" && operator === ""){
-                            let oldNum1 = num1;
-                            num1 = "-" + oldNum1; 
-                            splittedDiv.unshift("-");
-                            joined = splittedDiv.join('');
-                            operationDiv.textContent = joined;
+                        if (num2.charAt(0) !== "-"){
+                            let oldNum2 = num2;
+                            num2 = "-" + oldNum2;
+                            let signIndex = splittedDiv.findIndex((num) => {
+                                if (num === ' '){
+                                
+                                    return true;
+                                }  
+                            })
+                            splittedDiv.splice(signIndex + 3, 0, "-");
+                            operationDiv.textContent = splittedDiv.join('');
                         }
-                        else if (num1.includes('-') === true && operator === ""){
-                            let newNum1 = num1.slice(1);
-                            num1 = newNum1;
-                            splittedDiv.shift();
-                            joined = splittedDiv.join('');
-                            operationDiv.textContent = joined;
+                        else if (num2.includes('-') === true){
+                            let newNum2 = num2.slice(1);
+                            num2 = newNum2;
+                            let signIndex = splittedDiv.findIndex((num) => {
+                                if (num === ' '){
+                                
+                                    return true;
+                                }
+                            })
+                            splittedDiv.splice(signIndex + 3, 1);
+                            operationDiv.textContent = splittedDiv.join('');
+
                         }
-                        if (clickedSign === false) {
-                            clickedSign === true;
-                        } 
                     }
                     else if (num.textContent === '.') {
-                        if (num1.includes('.') === false){
+                        if (num2.includes('.') === false){
                             operationDiv.textContent += '.';
-                            num1 += ".";    
+                            num2 += "." ;   
                         }
                         
                     }
-                    
                     else {
-                        numClicked = num.textContent;
+                        numClicked = +num.textContent;
                         operationDiv.textContent += numClicked;
-                        num1 += +numClicked;
+                        num2 += +numClicked;
                     }
 
-                
+                }
             }
-            else if (num1Flag === false) {
+            else if (operatorFlage === false) {
                 if (num.textContent === "±"){
                     splittedDiv = operationDiv.textContent.split('');
                     if (num2.charAt(0) !== "-"){
@@ -131,6 +175,7 @@ if (num.textContent === "±" && operationDiv.textContent.charAt(0) !== "A"){
                         num2 = "-" + oldNum2;
                         let signIndex = splittedDiv.findIndex((num) => {
                             if (num === ' '){
+
                             
                                 return true;
                             }  
@@ -143,7 +188,6 @@ if (num.textContent === "±" && operationDiv.textContent.charAt(0) !== "A"){
                         num2 = newNum2;
                         let signIndex = splittedDiv.findIndex((num) => {
                             if (num === ' '){
-                            
                                 return true;
                             }
                         })
@@ -155,9 +199,8 @@ if (num.textContent === "±" && operationDiv.textContent.charAt(0) !== "A"){
                 else if (num.textContent === '.') {
                     if (num2.includes('.') === false){
                         operationDiv.textContent += '.';
-                        num2 += "." ;   
+                        num2 += ".";    
                     }
-                    
                 }
                 else {
                     numClicked = +num.textContent;
@@ -166,51 +209,8 @@ if (num.textContent === "±" && operationDiv.textContent.charAt(0) !== "A"){
                 }
 
             }
-        }
-        else if (operatorFlage === false) {
-            if (num.textContent === "±"){
-                splittedDiv = operationDiv.textContent.split('');
-                if (num2.charAt(0) !== "-"){
-                    let oldNum2 = num2;
-                    num2 = "-" + oldNum2;
-                    let signIndex = splittedDiv.findIndex((num) => {
-                        if (num === ' '){
-
-                        
-                            return true;
-                        }  
-                    })
-                    splittedDiv.splice(signIndex + 3, 0, "-");
-                    operationDiv.textContent = splittedDiv.join('');
-                }
-                else if (num2.includes('-') === true){
-                    let newNum2 = num2.slice(1);
-                    num2 = newNum2;
-                    let signIndex = splittedDiv.findIndex((num) => {
-                        if (num === ' '){
-                            return true;
-                        }
-                    })
-                    splittedDiv.splice(signIndex + 3, 1);
-                    operationDiv.textContent = splittedDiv.join('');
-
-                }
-            }
-            else if (num.textContent === '.') {
-                if (num2.includes('.') === false){
-                    operationDiv.textContent += '.';
-                    num2 += ".";    
-                }
-            }
-            else {
-                numClicked = +num.textContent;
-                operationDiv.textContent += numClicked;
-                num2 += +numClicked;
-            }
 
         }
-
-    }
         
     })
 })
@@ -243,28 +243,29 @@ allOperators.forEach((operator) => {
 
 equalBtn.addEventListener('click', () => {
     if ((num2 !== "" && num2.charAt(0) === "-" && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== "-" ) && 
-    (num2 !== "" && num2.charAt(0) === "." && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== ".")){
+       (num2 !== "" && num2.charAt(0) === "." && /^[0-9]+$/.test(num2.charAt(1)) || num2 !== "" && num2.charAt(0) !== ".")){
         if (operationDiv.textContent.charAt(0) !== "A"){
-                operaterAcc = false;
-                operatorFlage = false;
-                operation();
-            }
-            else {
-                num1 = result.toString();
-                operaterAcc = false;
-                operatorFlage = false;
-                operation();
-            }
+            operaterAcc = false;
+            operatorFlage = false;
+            operation();
+        }
+        else if (num2 === "-"){
+            return;
+        }
+        else {
+            num1 = result.toString();
+            operaterAcc = false;
+            operatorFlage = false;
+            operation();
+        }
     }
-    
-    
 })
 
 function operationProcess (operationType, sign){
-if(operationDiv.textContent.length >= 35){
-    alert('You have exceeded the limit of numbers !');
-    return;
-}
+    if(operationDiv.textContent.length >= 35){
+        alert('You have exceeded the limit of numbers !');
+        return;
+    }
     if((num1 !== "" && num1.charAt(0) === "-" && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== "-")&& 
     (num1 !== "" && num1.charAt(0) === "." && /^[0-9]+$/.test(num1.charAt(1)) || num1 !== "" && num1.charAt(0) !== ".")){
         if (num2 === "") {
@@ -288,6 +289,9 @@ if(operationDiv.textContent.length >= 35){
                 operationDiv.textContent = 'Math ERROR, press any button to continue :)';
                 resultDiv.textContent = " ";
             }
+            else if (num2 === "-"){
+                return;
+            }
             else {
                 operator = `${operationType}`;
                 num1 = result.toString();
@@ -295,7 +299,6 @@ if(operationDiv.textContent.length >= 35){
                 operationDiv.textContent = `Ans`;
                 operationDiv.textContent += ` ${sign} `;
             }
-            
         }    
     }
 }
